@@ -43,8 +43,11 @@
 
 #if(BOARD==CROWNSTONE)
 
-#define PIN_LED              3                   // this is gpio 3
-#define PIN_ADC              5                   // ain5 is pin 4
+#define PIN_LED              3                   // gpio 3 is p0.03
+#define PIN_ADC              5                   // ain5 is p0.04
+//#define PIN_ADC_REF          1                   // gpio 6
+#define PIN_RX               2                   // gpio 2
+#define PIN_TX               5                   // gpio 5
 
 #endif
 

@@ -37,11 +37,11 @@ IndoorLocalizationService::IndoorLocalizationService(Nrf51822BluetoothStack& _st
 void IndoorLocalizationService::AddSpecificCharacteristics() {
 	AddSignalStrengthCharacteristic();
 //	AddNumberCharacteristic();
-//	AddNumber2Characteristic();
+	AddNumber2Characteristic();
 	AddVoltageCurveCharacteristic();
-	AddScanControlCharacteristic();
-	AddPeripheralListCharacteristic();
-	AddPersonalThresholdCharacteristic();
+//	AddScanControlCharacteristic();
+//	AddPeripheralListCharacteristic();
+//	AddPersonalThresholdCharacteristic();
 }
 
 void IndoorLocalizationService::AddSignalStrengthCharacteristic() {
@@ -225,15 +225,26 @@ void IndoorLocalizationService::SampleAdcStart() {
        	//rms=%lu min=%lu max=%lu current=%i mA", voltage, rms, voltage_min, voltage_max, current);
 */
 
+	uint32_t sum = 0;
+	uint16_t size = _adc.getBuffer()->size;
 	int i = 0;
 	while (!_adc.getBuffer()->empty()) {
-		_log(INFO, "%u, ", _adc.getBuffer()->pop());
+		uint16_t res = _adc.getBuffer()->pop();
+		if (i%2)
+			sum += res;
+		_log(INFO, "%u, ", res);
 		if (!(++i % 10)) {
 			_log(INFO, "\r\n");
 		}
 	}
 	_log(INFO, "\r\n");
 	//stack->startAdvertising(); // segfault
+
+	if (_intChar2 != NULL) {
+		_log(INFO, "sum=%u\r\n", sum);
+		*_intChar2 = sum / (size/2);
+	}
+
 /*
 	uint64_t result = voltage_min;
 	result <<= 32;

@@ -93,9 +93,17 @@ uint32_t ADC::nrf_adc_init(uint8_t pin) {
 uint32_t ADC::nrf_adc_config(uint8_t pin) {
 	NRF_ADC->CONFIG     =
 			(ADC_CONFIG_RES_10bit                            << ADC_CONFIG_RES_Pos)     |
-			(ADC_CONFIG_INPSEL_AnalogInputOneThirdPrescaling << ADC_CONFIG_INPSEL_Pos)  | 
-			(ADC_CONFIG_REFSEL_VBG                           << ADC_CONFIG_REFSEL_Pos)  |
+//			(ADC_CONFIG_INPSEL_AnalogInputOneThirdPrescaling << ADC_CONFIG_INPSEL_Pos)  |
+//			(ADC_CONFIG_REFSEL_VBG                           << ADC_CONFIG_REFSEL_Pos)  |
+//			(ADC_CONFIG_EXTREFSEL_None                       << ADC_CONFIG_EXTREFSEL_Pos);
+
+			(ADC_CONFIG_INPSEL_AnalogInputOneThirdPrescaling << ADC_CONFIG_INPSEL_Pos)  |
+			(ADC_CONFIG_REFSEL_SupplyOneThirdPrescaling      << ADC_CONFIG_REFSEL_Pos)  |
 			(ADC_CONFIG_EXTREFSEL_None                       << ADC_CONFIG_EXTREFSEL_Pos);
+
+//			(ADC_CONFIG_INPSEL_AnalogInputOneThirdPrescaling << ADC_CONFIG_INPSEL_Pos)  |
+//			(ADC_CONFIG_REFSEL_External                      << ADC_CONFIG_REFSEL_Pos)  |
+//			(ADC_CONFIG_EXTREFSEL_AnalogReference1           << ADC_CONFIG_EXTREFSEL_Pos);
 	if (pin < 8) {
 		NRF_ADC->CONFIG |= ADC_CONFIG_PSEL_AnalogInput0 << (pin+ADC_CONFIG_PSEL_Pos);
 	} else {
