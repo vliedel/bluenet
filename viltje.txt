@@ -1,0 +1,4 @@
+The viltje is currently using a modified version of the voltage curve characteristic (124) as input: send any number to start the ADC sampling. The result is send to the number2 characteristic (121).
+The electrical scheme is as followes:
+
+ Vcc --- [ 10k ohm ] --- ADC_PIN --- [ pressure sensor ] --- GND
